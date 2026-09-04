@@ -58,6 +58,7 @@ if (manifest) {
     name: "afterglow-84",
     displayName: "Afterglow ’84",
     version: "0.1.0",
+    publisher: "Retrocoder",
     description: "A warm retro VS Code theme inspired by afternoon sunlight, vintage computers, and plum-colored sunsets.",
     license: "MIT"
   };

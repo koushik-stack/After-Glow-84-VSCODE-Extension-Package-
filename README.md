@@ -61,7 +61,7 @@ npm run validate
 npm run package
 ```
 
-Local packaging works without a publisher field. Before publishing, add your real Marketplace `publisher` ID to `package.json`; do not reuse the author name unless it is your registered publisher ID.
+The manifest uses the Marketplace publisher ID `Retrocoder`. Confirm that this exact identifier belongs to your **Retro Coder** publisher account before publishing.
 
 Install the generated archive with **Extensions: Install from VSIX...**, or run:
 

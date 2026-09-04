@@ -1,0 +1,7 @@
+{
+  "theme": "Afterglow ’84",
+  "version": "0.1.0",
+  "dark": true,
+  "palette": ["plum", "apricot", "rose", "sage"],
+  "contrastTarget": 4.5
+}

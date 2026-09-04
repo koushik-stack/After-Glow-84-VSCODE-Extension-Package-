@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title desc" shape-rendering="crispEdges">
+  <title id="title">Afterglow ’84 pixel sunset</title>
+  <desc id="desc">An orange pixel sun descending behind horizontal horizon lines in a plum sky.</desc>
+  <rect width="256" height="256" rx="32" fill="#211A24"/>
+  <rect x="16" y="16" width="224" height="224" rx="20" fill="#2A202D"/>
+  <rect x="32" y="32" width="192" height="192" fill="#1A151D"/>
+  <path fill="#FF9A62" d="M80 112h8V88h8V72h16V64h32v8h16v16h8v24h8v24H80z"/>
+  <path fill="#FFB35C" d="M96 96h8V80h16v-8h16v8h16v16h8v16H96z"/>
+  <path fill="#211A24" d="M64 112h128v8H64zm8 16h112v8H72zm-16 16h144v8H56zm16 16h112v8H72zm-32 16h176v8H40zm24 16h128v8H64z"/>
+  <path fill="#E89AC7" d="M40 208h176v8H40z"/>
+</svg>

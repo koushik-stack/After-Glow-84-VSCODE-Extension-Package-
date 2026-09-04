@@ -1,0 +1,24 @@
+:root {
+  --plum: #211a24;
+  --sun: #ff9a62;
+  --paper: #f3ddc4;
+}
+
+body {
+  display: grid;
+  min-height: 100vh;
+  margin: 0;
+  place-items: center;
+  color: var(--paper);
+  background: linear-gradient(165deg, #2a202d, var(--plum));
+}
+
+.cassette {
+  border: 2px solid var(--sun);
+  padding: 2rem;
+  box-shadow: 8px 8px 0 #171219;
+
+  & h1 span {
+    color: var(--sun);
+  }
+}

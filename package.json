@@ -1,0 +1,44 @@
+{
+  "name": "afterglow-84",
+  "displayName": "Afterglow ’84",
+  "version": "0.1.0",
+  "description": "A warm retro VS Code theme inspired by afternoon sunlight, vintage computers, and plum-colored sunsets.",
+  "author": {
+    "name": "Abu Koushik"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "theme",
+    "dark theme",
+    "retro",
+    "sunset",
+    "warm"
+  ],
+  "icon": "assets/icon.png",
+  "galleryBanner": {
+    "color": "#211A24",
+    "theme": "dark"
+  },
+  "contributes": {
+    "themes": [
+      {
+        "label": "Afterglow ’84",
+        "uiTheme": "vs-dark",
+        "path": "./themes/afterglow-84-color-theme.json"
+      }
+    ]
+  },
+  "scripts": {
+    "validate": "node scripts/validate-theme.mjs",
+    "package": "npx --yes @vscode/vsce package --allow-missing-repository"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.9.2"
+  }
+}

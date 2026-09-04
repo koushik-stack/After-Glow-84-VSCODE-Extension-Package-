@@ -1,0 +1,8 @@
+.git/**
+.gitignore
+.vscode/**
+examples/**
+scripts/**
+assets/icon.svg
+node_modules/**
+*.vsix

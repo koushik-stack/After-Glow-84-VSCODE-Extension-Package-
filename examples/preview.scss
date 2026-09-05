@@ -1,0 +1,7 @@
+$sun: #ff9a62;
+@mixin frame($width: 2px) { border: $width solid $sun; }
+.cassette {
+  @include frame;
+  // Nested selectors, variables, properties, and units.
+  &:hover { padding: 1rem; color: $sun; }
+}

@@ -1,7 +1,7 @@
 {
   "name": "afterglow-84",
   "displayName": "Afterglow ’84",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "Retrocoder",
   "description": "A warm retro VS Code theme inspired by afternoon sunlight, vintage computers, and plum-colored sunsets.",
   "author": {
@@ -32,12 +32,22 @@
         "label": "Afterglow ’84",
         "uiTheme": "vs-dark",
         "path": "./themes/afterglow-84-color-theme.json"
+      },
+      {
+        "label": "Afterglow ’84 — Night Drive",
+        "uiTheme": "vs-dark",
+        "path": "./themes/afterglow-84-night-drive-color-theme.json"
+      },
+      {
+        "label": "Afterglow ’84 — Golden Hour",
+        "uiTheme": "vs",
+        "path": "./themes/afterglow-84-golden-hour-color-theme.json"
       }
     ]
   },
   "scripts": {
     "validate": "node scripts/validate-theme.mjs",
-    "package": "npx --yes @vscode/vsce package --allow-missing-repository"
+    "package": "vsce package --allow-missing-repository"
   },
   "devDependencies": {
     "@vscode/vsce": "^3.9.2"

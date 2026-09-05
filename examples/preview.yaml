@@ -1,0 +1,8 @@
+# Keys, anchors, strings, booleans, and numbers.
+defaults: &sunset
+  title: "Afterglow"
+  year: 1984
+  warm: true
+night:
+  <<: *sunset
+  palette: [plum, amber, sage]

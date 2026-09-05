@@ -1,3 +1,4 @@
+import { validateFamily, safeProjectPath } from "./validate-family.mjs";
 import { access, readFile, stat } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -14,6 +15,16 @@ const requiredFiles = [
   "examples/preview.css",
   "examples/preview.json",
   "examples/preview.md",
+  "examples/preview.js",
+  "examples/preview.jsx",
+  "examples/preview.tsx",
+  "examples/preview.c",
+  "examples/Preview.java",
+  "examples/preview.go",
+  "examples/preview.rs",
+  "examples/preview.scss",
+  "examples/preview.yaml",
+  "examples/preview.sh",
   "themes/afterglow-84-color-theme.json",
   ".gitignore",
   ".vscodeignore",
@@ -57,7 +68,6 @@ if (manifest) {
   const expected = {
     name: "afterglow-84",
     displayName: "Afterglow ’84",
-    version: "0.1.0",
     publisher: "Retrocoder",
     description: "A warm retro VS Code theme inspired by afternoon sunlight, vintage computers, and plum-colored sunsets.",
     license: "MIT"
@@ -74,11 +84,11 @@ if (manifest) {
   check(themeContribution?.uiTheme === "vs-dark", "theme UI type is vs-dark");
   check(typeof themePath === "string", "manifest has a theme path");
   check(typeof manifest.icon === "string", "manifest has an icon path");
-  if (themePath) check(resolve(root, themePath).startsWith(root), "theme path stays inside project");
-  if (manifest.icon) check(resolve(root, manifest.icon).startsWith(root), "icon path stays inside project");
+  if (themePath) check(safeProjectPath(root, themePath), "theme path stays inside project");
+  if (manifest.icon) check(safeProjectPath(root, manifest.icon), "icon path stays inside project");
 }
 
-const hexPattern = /^#[0-9A-Fa-f]{3,4}(?:[0-9A-Fa-f]{3,4})?$/;
+const hexPattern = /^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{4}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
 const visitColors = (value, path = "theme") => {
   if (typeof value === "string" && value.startsWith("#")) {
     check(hexPattern.test(value), `valid hex color at ${path}: ${value}`);
@@ -122,23 +132,7 @@ if (theme) {
   }
 }
 
-const rgb = (hex) => [1, 3, 5].map((start) => Number.parseInt(hex.slice(start, start + 2), 16));
-const luminance = (hex) => rgb(hex).map((value) => value / 255).map((value) => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4).reduce((sum, value, index) => sum + value * [0.2126, 0.7152, 0.0722][index], 0);
-const contrast = (foreground, background) => {
-  const [lighter, darker] = [luminance(foreground), luminance(background)].sort((a, b) => b - a);
-  return (lighter + 0.05) / (darker + 0.05);
-};
-const contrastCheck = (foreground, background, minimum, label) => {
-  const ratio = contrast(foreground, background);
-  check(ratio >= minimum, `${label} contrast ${ratio.toFixed(2)}:1 meets ${minimum}:1`);
-};
-
-contrastCheck("#F3DDC4", "#211A24", 4.5, "editor foreground/background");
-contrastCheck("#A08799", "#211A24", 4.5, "comment/background");
-contrastCheck("#FFF4E5", "#AD553E", 4.5, "button foreground/background");
-contrastCheck("#FFF4E5", "#B05740", 4.5, "button hover foreground/background");
-contrastCheck("#211A24", "#FF9A62", 4.5, "activity badge foreground/background");
-contrastCheck("#F3DDC4", "#594052", 4.5, "selected-list foreground/background");
+await validateFamily(root, manifest, check);
 
 try {
   const png = await readFile(resolve(root, "assets/icon.png"));
@@ -158,5 +152,7 @@ if (failures.length) {
   process.exitCode = 1;
 } else {
   console.log(`Validation passed: ${checks.length} checks`);
-  for (const message of checks.filter((item) => item.includes("contrast"))) console.log(`  ✓ ${message}`);
+  if (process.argv.includes("--verbose")) {
+    for (const message of checks.filter((item) => item.includes("contrast"))) console.log(`  ✓ ${message}`);
+  }
 }

@@ -128,6 +128,10 @@ When working around midnight or 3 a.m., enable **Night Light** on Windows or sup
 
 Open the relevant preview file, reproduce the token or UI state, and use the token inspector before changing a rule. Keep changes within the established palette where possible. Run `npm run validate` and rebuild the VSIX before sharing changes. Please do not add runtime code, telemetry, network access, or unrelated theme variants.
 
+
+Please do not commit to Main file directly open a new branch everytime to wish to contribute.
+
+
 ## License
 
 Copyright (c) 2026 Abu Koushik. Released under the MIT License; see `LICENSE` in the extension root.

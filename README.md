@@ -11,15 +11,41 @@ Afterglow ’84 is a warm, restrained dark theme for Visual Studio Code. It foll
 
 ## Included themes
 
-Afterglow ’84 now includes three coordinated color themes for different lighting conditions:
+Afterglow ’84 now includes four coordinated color themes for different lighting conditions:
 
 | Theme | Style | Best suited for |
 | --- | --- | --- |
 | **Afterglow ’84** | Balanced warm plum dark theme | Everyday coding and afternoon-to-evening use |
 | **Afterglow ’84 — Night Drive** | Deeper, lower-brightness plum theme without a pure-black background | Late-night and dim-room coding |
 | **Afterglow ’84 — Golden Hour** | Warm parchment light theme with darker sunset-inspired syntax colors | Bright rooms and daytime coding |
+| **Afterglow ’84 — Retro Amber** | Near-black blue surfaces with amber focus, orange keywords, and lime strings | A restrained retro editor with warm accents |
 
-All three variants preserve the same syntax hierarchy while adjusting brightness and contrast for their backgrounds.
+The original three variants preserve the same syntax hierarchy while adjusting brightness and contrast for their backgrounds. Retro Amber uses its own syntax assignments, including lavender parameters and neutral variables and object properties.
+
+### Retro Amber palette and contrast
+
+| Role | Hex |
+| --- | --- |
+| Editor, sidebar, activity bar, panel | `#0D1017` |
+| Default text, variables, object properties | `#BFBDB6` |
+| Current line | `#161A24` |
+| Selected Explorer row / subtle separators | `#181D26` |
+| Active tab underline / focused input outline | `#E6B450` |
+| Keywords / control flow | `#FF8F40` |
+| Functions / methods | `#FFB454` |
+| Strings | `#AAD94C` |
+| Parameters / numbers / booleans | `#D2A6FF` |
+| Regular-expression body | `#95E6CB` |
+| Italic comments | `#5A6673` |
+| Muted interface labels | `#5A6378` |
+
+Against `#0D1017`, default text measures **10.12:1**, comments **3.25:1**, and muted labels **3.16:1**. Comments and muted labels intentionally fall below the earlier 4.5:1 target to retain the supplied reference colors. Validation prints these as **EXCEPTION**, never as passing 4.5:1 results. Muted labels on raised surfaces can have still lower contrast. The original three themes retain their existing contrast requirements; this is not a claim that every interface state is accessible.
+
+Unshown states are design choices: coral `#F07178` errors, amber/orange warnings, lavender information, dark hover widgets, blue-gray `#273140` selections, and translucent lime/coral diffs. Terminal ANSI colors reuse the syntax palette with lighter bright shades; ANSI black remains a background-like color. These values are not claimed as exact screenshot matches.
+
+The new palette follows the supplied sampled colors; the reference image was unavailable during implementation. A color theme cannot reproduce Explorer icons, PowerShell prompts, font rendering, or panel positions. No icon selection, font, prompt, layout, or bracket-colorization setting is changed. Supported bracket colors retain normal VS Code behavior.
+
+Theme files are hand-authored; there is no theme generator. Workbench colors and semantic selectors follow the official [color-theme system](https://code.visualstudio.com/api/extension-guides/color-theme), [color reference](https://code.visualstudio.com/api/references/theme-color), and [semantic highlighting guide](https://code.visualstudio.com/api/language-extensions/semantic-highlight-guide).
 
 ## Palette
 
@@ -85,7 +111,7 @@ To test the source folder directly:
 
 1. Open this folder in VS Code.
 2. Press `F5` and select **Run Afterglow ’84 Theme** if prompted. On a MacBook, use `fn+F5` if the function keys control hardware features.
-3. In the Extension Development Host, run **Preferences: Color Theme** and choose **Afterglow ’84**, **Afterglow ’84 — Night Drive**, or **Afterglow ’84 — Golden Hour**.
+3. In the Extension Development Host, run **Preferences: Color Theme** and choose **Afterglow ’84**, **Afterglow ’84 — Night Drive**, **Afterglow ’84 — Golden Hour**, or **Afterglow ’84 — Retro Amber**.
 4. Open files under `examples/` to inspect representative syntax.
 
 ## Build and install a VSIX
@@ -98,12 +124,14 @@ npm run validate
 npm run package
 ```
 
+Run validator unit checks with `node --test scripts/validate-family.test.mjs`. Optionally run `node scripts/validate-vscode.mjs "<VS Code resources/app directory>"` to check color IDs against an installed workbench and tokenize the JavaScript preview with its bundled grammar. This requires a desktop VS Code installation containing `node_modules.asar`; it does not replace a graphical or language-server test.
+
 The manifest uses the Marketplace publisher ID `Retrocoder`. Confirm that this exact identifier belongs to your **Retro Coder** publisher account before publishing.
 
 Install the generated archive with **Extensions: Install from VSIX...**, or run:
 
 ```sh
-code --install-extension afterglow-84-0.2.0.vsix
+code --install-extension afterglow-84-0.3.0.vsix
 ```
 
 The same `.vsix` works across Windows, macOS, and Linux because the extension contains no platform-specific runtime code. Packaging does not publish the extension.
@@ -111,6 +139,10 @@ The same `.vsix` works across Windows, macOS, and Linux because the extension co
 ## Inspect token scopes
 
 In the Extension Development Host, place the cursor on a token and run **Developer: Inspect Editor Tokens and Scopes**. The inspector shows the TextMate scope stack, semantic token, and winning theme rule. Use the preview files to check comments, control flow, callables, types, variables, constants, tags, attributes, and invalid syntax across grammars.
+
+For Retro Amber, check `examples/preview.js`: `sunset` should be orange-gold, `hour`, `18`, and `true` lavender, `"Afterglow"` lime, and the regex body mint. Repeat with semantic highlighting enabled and disabled; variables and object keys should remain neutral. Check the thin amber underline below the active tab, focused input outline, Explorer selection, and bracket pairs. A graphical comparison and real macOS testing remain pending.
+
+Without semantic highlighting, the built-in JavaScript grammar marks the `hour` declaration as a parameter but its later references as ordinary variables (neutral). The semantic `parameter` rule supplies lavender for identified references; a color theme alone cannot infer symbol identity from TextMate scopes.
 
 ## Known limitations
 

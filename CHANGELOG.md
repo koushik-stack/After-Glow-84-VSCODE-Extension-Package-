@@ -2,6 +2,13 @@
 
 All notable changes to Afterglow ’84 are documented here.
 
+## 0.3.0
+
+- Added exactly one color theme, Afterglow ’84 — Retro Amber, with near-black blue surfaces and the supplied amber, orange, lime, lavender, and mint syntax palette.
+- Preserved all three existing themes, labels, extension identity, logo, and macOS instructions.
+- Added explicit Retro Amber-only contrast exceptions for sampled dim comments (3.25:1) and muted labels (3.16:1); other variants retain their existing requirements.
+- Documented derived interaction and terminal colors, token-preview expectations, and pending graphical/reference and macOS checks.
+
 ## 0.2.0
 
 - Added Night Drive, a deep plum nighttime theme, and Golden Hour, a warm parchment light theme.

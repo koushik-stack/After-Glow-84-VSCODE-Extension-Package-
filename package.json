@@ -1,7 +1,7 @@
 {
   "name": "afterglow-84",
   "displayName": "Afterglow ’84",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publisher": "Retrocoder",
   "description": "A warm retro VS Code theme inspired by afternoon sunlight, vintage computers, and plum-colored sunsets.",
   "author": {
@@ -42,6 +42,11 @@
         "label": "Afterglow ’84 — Golden Hour",
         "uiTheme": "vs",
         "path": "./themes/afterglow-84-golden-hour-color-theme.json"
+      },
+      {
+        "label": "Afterglow ’84 — Retro Amber",
+        "uiTheme": "vs-dark",
+        "path": "./themes/afterglow-84-retro-amber-color-theme.json"
       }
     ]
   },

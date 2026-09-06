@@ -2,6 +2,26 @@
 
 Afterglow ’84 is a warm, restrained dark theme for Visual Studio Code. It follows afternoon light into a plum evening with apricot functions, coral control flow, sage strings, and lavender types. Its visual language borrows from vintage computers, cassette packaging, and golden-hour skies without turning the editor into neon signage.
 
+## Theme screenshots
+
+These user-supplied screenshots show the four themes with no code file open. Icons and window layout reflect the user's setup and are separate from the color themes.
+
+### Afterglow ’84
+
+![Afterglow ’84 original warm plum interface](https://retrocoder.vscode-unpkg.net/Retrocoder/afterglow-84/0.3.1/extension/assets/screenshots/afterglow-84.jpg)
+
+### Night Drive
+
+![Afterglow ’84 Night Drive dark plum interface](https://retrocoder.vscode-unpkg.net/Retrocoder/afterglow-84/0.3.1/extension/assets/screenshots/night-drive.jpg)
+
+### Golden Hour
+
+![Afterglow ’84 Golden Hour warm parchment interface](https://retrocoder.vscode-unpkg.net/Retrocoder/afterglow-84/0.3.1/extension/assets/screenshots/golden-hour.jpg)
+
+### Retro Amber
+
+![Afterglow ’84 Retro Amber near-black blue interface](https://retrocoder.vscode-unpkg.net/Retrocoder/afterglow-84/0.3.1/extension/assets/screenshots/retro-amber.jpg)
+
 ## Design philosophy
 
 - Keep large surfaces dark plum and reserve orange for focus, navigation, and small active states.
@@ -131,7 +151,7 @@ The manifest uses the Marketplace publisher ID `Retrocoder`. Confirm that this e
 Install the generated archive with **Extensions: Install from VSIX...**, or run:
 
 ```sh
-code --install-extension afterglow-84-0.3.0.vsix
+code --install-extension afterglow-84-0.3.1.vsix
 ```
 
 The same `.vsix` works across Windows, macOS, and Linux because the extension contains no platform-specific runtime code. Packaging does not publish the extension.

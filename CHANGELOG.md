@@ -2,6 +2,12 @@
 
 All notable changes to Afterglow ’84 are documented here.
 
+## 0.3.1
+
+- Added user-supplied interface screenshots for all four themes to the Marketplace description.
+- Bundled the original JPEG images under assets/screenshots, with versioned Microsoft-hosted image URLs.
+- Preserved all theme palettes and syntax rules.
+
 ## 0.3.0
 
 - Added exactly one color theme, Afterglow ’84 — Retro Amber, with near-black blue surfaces and the supplied amber, orange, lime, lavender, and mint syntax palette.

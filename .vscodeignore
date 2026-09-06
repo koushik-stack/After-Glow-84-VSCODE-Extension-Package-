@@ -6,6 +6,7 @@ scripts/**
 assets/icon.svg
 node_modules/**
 *.vsix
+*.JPG
 
 **/.DS_Store
 .DS_Store

@@ -33,7 +33,9 @@ const tm = bundledModule('vscode-textmate');
 const onig = bundledModule('vscode-oniguruma');
 const wasm = await read('node_modules.asar.unpacked/vscode-oniguruma/release/onig.wasm');
 await onig.loadWASM(wasm.buffer.slice(wasm.byteOffset, wasm.byteOffset + wasm.byteLength));
-const theme = JSON.parse(await readFile(resolve(root, 'themes/afterglow-84-retro-amber-color-theme.json'), 'utf8'));
+for (const variant of ['retro-amber', 'dark-roast']) {
+const roast = variant === 'dark-roast';
+const theme = JSON.parse(await readFile(resolve(root, `themes/afterglow-84-${variant}-color-theme.json`), 'utf8'));
 const registry = new tm.Registry({
   theme: { settings: [{ settings: { foreground: theme.colors['editor.foreground'], background: theme.colors['editor.background'] } }, ...theme.tokenColors] },
   onigLib: Promise.resolve({ createOnigScanner: sources => new onig.OnigScanner(sources), createOnigString: text => new onig.OnigString(text) }),
@@ -41,7 +43,9 @@ const registry = new tm.Registry({
 });
 const grammar = await registry.loadGrammar('source.js');
 const preview = (await readFile(resolve(root, 'examples/preview.js'), 'utf8')).split(/\r?\n/);
-const expected = { sunset: '#FFB454', hour: '#D2A6FF', '18': '#D2A6FF', Afterglow: '#AAD94C', true: '#D2A6FF', golden: '#95E6CB', palette: '#BFBDB6', name: '#BFBDB6', glow: '#BFBDB6' };
+const expected = roast
+  ? { sunset: '#E6B673', hour: '#DEC7A6', '18': '#D7A184', Afterglow: '#B8BF8A', true: '#D7A184', golden: '#A7BAA0', palette: '#DEC7A6', name: '#DEC7A6', glow: '#DEC7A6' }
+  : { sunset: '#FFB454', hour: '#D2A6FF', '18': '#D2A6FF', Afterglow: '#AAD94C', true: '#D2A6FF', golden: '#95E6CB', palette: '#BFBDB6', name: '#BFBDB6', glow: '#BFBDB6' };
 const seen = new Set();
 let state = tm.INITIAL;
 for (const line of preview) {
@@ -58,7 +62,7 @@ for (const line of preview) {
       if (word === 'golden' && !scopes.some(s => s.startsWith('string.regexp'))) continue;
       // TextMate cannot distinguish a parameter reference from a local variable.
       // The JavaScript language service supplies semantic 'parameter' for references.
-      const target = word === 'hour' && !scopes.some(s => s.startsWith('variable.parameter')) ? '#BFBDB6' : expected[word];
+      const target = !roast && word === 'hour' && !scopes.some(s => s.startsWith('variable.parameter')) ? '#BFBDB6' : expected[word];
       assert.equal(color, target, `${word}: ${scopes.join(' ')}`);
       seen.add(word);
       console.log(`JavaScript TextMate ${word}: ${color}`);
@@ -67,5 +71,6 @@ for (const line of preview) {
   state = result.ruleStack;
 }
 assert.deepEqual([...seen].sort(), Object.keys(expected).sort(), 'all preview targets checked');
-for (const [selector, color] of Object.entries({ function: '#FFB454', method: '#FFB454', parameter: '#D2A6FF', number: '#D2A6FF', string: '#AAD94C', regexp: '#95E6CB', variable: '#BFBDB6', property: '#BFBDB6', 'variable.readonly': '#BFBDB6', 'property.readonly': '#BFBDB6' })) assert.equal(theme.semanticTokenColors[selector], color, selector);
+for (const [selector, color] of Object.entries(roast ? { function: '#E6B673', method: '#E6B673', parameter: '#DEC7A6', number: '#D7A184', string: '#B8BF8A', regexp: '#A7BAA0', variable: '#DEC7A6', property: '#DEC7A6', 'variable.readonly': '#DEC7A6', 'property.readonly': '#DEC7A6' } : { function: '#FFB454', method: '#FFB454', parameter: '#D2A6FF', number: '#D2A6FF', string: '#AAD94C', regexp: '#95E6CB', variable: '#BFBDB6', property: '#BFBDB6', 'variable.readonly': '#BFBDB6', 'property.readonly': '#BFBDB6' })) assert.equal(theme.semanticTokenColors[selector], color, selector);
 console.log('PASS: installed JavaScript grammar and semantic assignments (not a graphical or language-server test)');
+}

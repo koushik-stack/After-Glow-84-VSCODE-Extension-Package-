@@ -1,4 +1,5 @@
 .git/**
+.qa/**
 .gitignore
 .vscode/**
 examples/**

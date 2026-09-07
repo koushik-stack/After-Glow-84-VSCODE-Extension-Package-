@@ -2,6 +2,16 @@
 
 All notable changes to Afterglow ’84 are documented here.
 
+## 0.4.0
+
+- Added Afterglow ’84 — Dark Roast with espresso-brown surfaces, parchment text, caramel focus, copper keywords, and 330 explicit interface colors.
+- Preserved all four existing theme files and registrations, extension identity, and logo.
+- Added TextMate and semantic highlighting with narrowed selectors, explicit brown empty-editor coverage, and all 16 terminal ANSI slots.
+- Added Dark Roast contrast guards and installed-grammar validation; selected text uses parchment to keep comments readable on the active selection.
+- Documented the palette, terminal-only additions, selection instructions, and measured contrast without introducing low-contrast exceptions.
+- Added real Windows Development Host screenshots of Dark Roast's code and empty-editor views; documented the scope and remaining visual checks.
+- Reduced search and diff overlay opacity to preserve comment contrast, including stacked diff backgrounds.
+
 ## 0.3.1
 
 - Added user-supplied interface screenshots for all four themes to the Marketplace description.

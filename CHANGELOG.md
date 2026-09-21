@@ -2,6 +2,17 @@
 
 All notable changes to Afterglow ’84 are documented here.
 
+## 0.5.0
+
+- Added Afterglow ’84 — Mocha Retro as a sixth theme, with soft coffee-brown surfaces, cream text, caramel focus, copper keywords, olive strings and 476 explicit interface colors.
+- Preserved all five existing theme files, extension identity and logo; retained a declarative extension with no runtime or new dependencies.
+- Covered empty-editor/welcome, menus, terminal ANSI, settings, notebooks, diagnostics, diffs and debugging surfaces; added consistent TextMate and semantic rules with normal source weight and Markdown emphasis.
+- Verified main/comment contrast of 10.77:1 and 5.66:1. Darkened only the active editor selection from #58402E to #412F22 after graphical testing showed selected comments at 3.45:1: normal dark themes do not apply the high-contrast selection foreground. Selected comments now measure 4.56:1.
+- Reduced matching-selection and stacked diff overlay opacities to retain 4.5:1 text contrast; added 871 Mocha state, palette and precedence checks without weakening existing validation or adding contrast exceptions.
+- Extended installed-grammar validation to all 17 preview languages and 34 targeted precedence cases; inspected actual TypeScript language-service output and Windows Development Host rendering.
+- Added genuine Mocha Retro editor and empty-editor screenshots, palette/ANSI tables, selection instructions and explicit remaining platform/visual checks.
+- Incremented the minor version from 0.4.0 to 0.5.0 and synchronized the lockfile.
+
 ## 0.4.0
 
 - Added Afterglow ’84 — Dark Roast with espresso-brown surfaces, parchment text, caramel focus, copper keywords, and 330 explicit interface colors.

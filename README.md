@@ -31,7 +31,7 @@ These user-supplied screenshots show the four themes with no code file open. Ico
 
 ## Included themes
 
-Afterglow ’84 now includes five coordinated color themes for different lighting conditions:
+Afterglow ’84 now includes six coordinated color themes for different lighting conditions:
 
 | Theme | Style | Best suited for |
 | --- | --- | --- |
@@ -40,6 +40,67 @@ Afterglow ’84 now includes five coordinated color themes for different lightin
 | **Afterglow ’84 — Golden Hour** | Warm parchment light theme with darker sunset-inspired syntax colors | Bright rooms and daytime coding |
 | **Afterglow ’84 — Retro Amber** | Near-black blue surfaces with amber focus, orange keywords, and lime strings | A restrained retro editor with warm accents |
 | **Afterglow ’84 — Dark Roast** | Espresso and walnut surfaces, parchment text, caramel and copper accents | A vintage coffee-shop atmosphere with readable brown surfaces |
+| **Afterglow ’84 — Mocha Retro** | Soft chocolate surfaces, warm cream, faded olive and golden caramel | A calm vintage café with lighter coffee-brown midtones |
+
+### Mocha Retro palette and contrast
+
+Install version **0.5.0**, run **Preferences: Color Theme**, and choose **Afterglow ’84 — Mocha Retro**. The shortcut is `Ctrl+K Ctrl+T` on Windows/Linux or `Cmd+K Cmd+T` on macOS. This dark variant brings together mocha coffee, walnut furniture, faded books and warm café lighting. It is lighter and softer than Dark Roast and keeps the empty editor brown as well.
+
+| Role | Hex |
+| --- | --- |
+| Editor, gutter, empty editor, active tabs | `#2A211C` |
+| Sidebar, title bar, inactive tabs | `#201814` |
+| Activity bar | `#1B1511` |
+| Panel, terminal, status bar | `#241C17` |
+| Current line and subtle hover | `#33271F` |
+| Inputs, menus, dropdowns and widgets | `#382B23` |
+| Selected controls / inactive editor selection | `#58402E` / `#3C2E24` |
+| Active editor selection, adjusted for contrast | `#412F22` |
+| Borders and separators | `#544032` |
+| Main text / secondary text / italic comments | `#E6D3B5` / `#C7B299` / `#AD9785` |
+| Caramel focus / honey cursor | `#D3A16A` / `#EDC68C` |
+| Copper keywords / golden functions and methods | `#D99A79` / `#DFB374` |
+| Olive strings / sage regex | `#B5BE8A` / `#A9B59B` |
+| Terracotta numbers and booleans / brass types and classes | `#D6A086` / `#D6C28E` |
+| Parchment variables, parameters and properties / sand punctuation | `#DFCCB0` / `#C4AD91` |
+| Errors and deletions / warnings / information | `#DF9285` / `#DFB374` / `#ADB7B0` |
+
+Measured WCAG contrast is **10.77:1** for main text and **5.66:1** for comments against the editor. Comments and input placeholders on raised widgets measure **4.90:1**. Primary buttons use `#201814` text on caramel (**7.55:1**) and golden caramel on hover (**9.02:1**). Secondary buttons, selected lists, suggestions, inactive labels, input validation, notebooks, settings and other explicit text states are checked separately.
+
+The active editor selection is the one necessary opaque adjustment to the supplied palette: `#58402E` becomes **`#412F22`**, the nearest passing shade along a proportional RGB darkening of that color. Graphical inspection confirmed that normal dark themes retain syntax colors when selected; [VS Code documents `editor.selectionForeground` for high contrast](https://code.visualstudio.com/api/references/theme-color#editor-colors). The proposed selection gave comments only **3.45:1**. The adjusted editor selection gives comments **4.56:1** and main text **8.67:1**, preserving the syntax hierarchy. Selected controls retain `#58402E` because their foregrounds can be specified independently. No comment color was lightened and no ordinary-text contrast exception was introduced.
+
+Transparent overlays are composited before measurement. Search, word, bracket, peek and execution highlights use low-opacity palette tints. The matching-selection overlay uses alpha `5E` instead of `66`. Inserted and removed diff text use alpha `08` and `0B`, with line tints at `0A`, so comments still pass even when diff layers overlap the current-line background. The original stronger tints failed those checks. Caramel active indicators and brown separators stay restrained.
+
+Disabled controls and decorative borders are treated separately. Disabled labels measure **2.72:1** on raised brown; separators measure **1.72:1** against the panel. The installed VS Code 1.136.1 generic button CSS uses 40% disabled opacity; compositing both button text and fill gives **2.35:1** over the editor and **2.40:1** over raised widgets. These disabled states are exempt from the ordinary-text threshold. There is no invented disabled-button theme key; VS Code controls that opacity.
+
+All 16 terminal ANSI slots are explicit:
+
+| ANSI family | Normal | Bright |
+| --- | --- | --- |
+| Black | `#1B1511` | `#AD9785` |
+| Red | `#DF9285` | `#EDB0A6` |
+| Green | `#B5BE8A` | `#CCD1A5` |
+| Yellow | `#DFB374` | `#EDC68C` |
+| Blue | `#9DAFBD` | `#B0C0C6` |
+| Magenta | `#BD9FA7` | `#D0B0B6` |
+| Cyan | `#9FBDB6` | `#B8CFC3` |
+| White | `#E6D3B5` | `#EDDCC0` |
+
+The muted blue, rose and cyan additions are limited to terminal ANSI roles. Every ANSI text slot except conventional background-like black passes 4.5:1 against the terminal. Shells and prompt frameworks can supply their own colors, so this theme cannot control every prompt element. It does not change icons, fonts, shell configuration, personal settings or panel layout.
+
+Mocha Retro retains all documented language coverage, with italic comments, normal-weight source text and Markdown bold, italic and combined emphasis. Function calls and decorators use symbol-specific scopes; arguments, properties and readonly variables retain parchment. Built-in semantic functions and types keep their roles without a blanket `*.defaultLibrary` override. TextMate alone sees JavaScript `Math` and `Number` receivers as object variables; language-server tokens can refine their roles.
+
+Real screenshots from the implemented theme in an isolated Windows Extension Development Host:
+
+![Mocha Retro TypeScript editor](assets/screenshots/mocha-retro.png)
+
+![Mocha Retro empty editor](assets/screenshots/mocha-retro-empty.png)
+
+Validation for 0.5.0 covers 476 recognized workbench color IDs, 871 Mocha-specific state/overlay/palette checks, the existing family validators and four validator unit tests. Installed VS Code 1.136.1 grammars tokenize all 17 preview languages (1,378 token spans); 34 targeted assertions cover built-ins, calls, arguments, decorators, JSON/YAML keys and Markdown emphasis. Real TypeScript language-service tokens and rendered colors were inspected for functions, methods, parameters, types, readonly properties and built-ins.
+
+The Windows graphical pass covered the empty editor, TypeScript, Markdown, Command Palette, context menu, hover documentation, suggestions, active/inactive selections, terminal ANSI output, synthetic error/warning/information diagnostics and side-by-side diffs. Comparisons used the original theme and Dark Roast in the same host. The native Windows automation helper was unavailable; VS Code's development-test API and Chromium renderer captures supplied the actual inspection and screenshots. Temporary profiles and fixtures are excluded from the VSIX.
+
+Remaining manual checks: real Linux and macOS (Intel and Apple Silicon), VS Code's oldest supported version, native platform menus, every language server, notebook/settings interactions, live debugging, Git decoration states, and pointer-hover/disabled-button appearance. Those states have explicit colors and automated checks where applicable, but are not claimed as fully tested graphically.
 
 ### Dark Roast palette and contrast
 
@@ -175,7 +236,7 @@ To test the source folder directly:
 
 1. Open this folder in VS Code.
 2. Press `F5` and select **Run Afterglow ’84 Theme** if prompted. On a MacBook, use `fn+F5` if the function keys control hardware features.
-3. In the Extension Development Host, run **Preferences: Color Theme** and choose **Afterglow ’84**, **Afterglow ’84 — Night Drive**, **Afterglow ’84 — Golden Hour**, **Afterglow ’84 — Retro Amber**, or **Afterglow ’84 — Dark Roast**.
+3. In the Extension Development Host, run **Preferences: Color Theme** and choose **Afterglow ’84**, **Afterglow ’84 — Night Drive**, **Afterglow ’84 — Golden Hour**, **Afterglow ’84 — Retro Amber**, **Afterglow ’84 — Dark Roast**, or **Afterglow ’84 — Mocha Retro**.
 4. Open files under `examples/` to inspect representative syntax.
 
 ## Build and install a VSIX
@@ -188,14 +249,14 @@ npm run validate
 npm run package
 ```
 
-Run validator unit checks with `node --test scripts/validate-family.test.mjs`. Optionally run `node scripts/validate-vscode.mjs "<VS Code resources/app directory>"` to check color IDs against an installed workbench and tokenize the JavaScript preview with its bundled grammar. This requires a desktop VS Code installation containing `node_modules.asar`; it does not replace a graphical or language-server test.
+Run validator unit checks with `node --test scripts/validate-family.test.mjs`. Optionally run `node scripts/validate-vscode.mjs "<VS Code resources/app directory>"` to check color IDs against an installed workbench, retain the existing JavaScript checks and test all Mocha Retro preview grammars and precedence cases. This requires a desktop VS Code installation containing `node_modules.asar`; it does not replace a graphical or language-server test.
 
 The manifest uses the Marketplace publisher ID `Retrocoder`. Confirm that this exact identifier belongs to your **Retro Coder** publisher account before publishing.
 
 Install the generated archive with **Extensions: Install from VSIX...**, or run:
 
 ```sh
-code --install-extension afterglow-84-0.4.0.vsix
+code --install-extension afterglow-84-0.5.0.vsix
 ```
 
 The same `.vsix` works across Windows, macOS, and Linux because the extension contains no platform-specific runtime code. Packaging does not publish the extension.

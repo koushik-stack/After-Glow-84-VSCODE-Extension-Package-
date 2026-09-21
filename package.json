@@ -1,7 +1,7 @@
 {
   "name": "afterglow-84",
   "displayName": "Afterglow ’84",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "publisher": "Retrocoder",
   "description": "A warm retro VS Code theme inspired by afternoon sunlight, vintage computers, and plum-colored sunsets.",
   "author": {
@@ -52,11 +52,16 @@
         "label": "Afterglow ’84 — Dark Roast",
         "uiTheme": "vs-dark",
         "path": "./themes/afterglow-84-dark-roast-color-theme.json"
+      },
+      {
+        "label": "Afterglow ’84 — Mocha Retro",
+        "uiTheme": "vs-dark",
+        "path": "./themes/afterglow-84-mocha-retro-color-theme.json"
       }
     ]
   },
   "scripts": {
-    "validate": "node scripts/validate-theme.mjs && node scripts/validate-dark-roast.mjs",
+    "validate": "node scripts/validate-theme.mjs && node scripts/validate-dark-roast.mjs && node scripts/validate-mocha-retro.mjs",
     "package": "vsce package --allow-missing-repository --no-rewrite-relative-links"
   },
   "devDependencies": {

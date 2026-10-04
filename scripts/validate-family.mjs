@@ -46,11 +46,12 @@ export async function validateFamily(root, manifest, check) {
     ["Afterglow ’84 — Golden Hour", "vs", "light", "afterglow-84-golden-hour-color-theme.json"],
     ["Afterglow ’84 — Retro Amber", "vs-dark", "dark", "afterglow-84-retro-amber-color-theme.json"],
     ["Afterglow ’84 — Dark Roast", "vs-dark", "dark", "afterglow-84-dark-roast-color-theme.json"],
-    ["Afterglow ’84 — Mocha Retro", "vs-dark", "dark", "afterglow-84-mocha-retro-color-theme.json"]
+    ["Afterglow ’84 — Mocha Retro", "vs-dark", "dark", "afterglow-84-mocha-retro-color-theme.json"],
+    ["Afterglow ’84 — Midnight Mocha", "vs-dark", "dark", "afterglow-84-midnight-mocha-color-theme.json"]
   ];
   check(Object.keys(manifest.contributes || {}).length === 1 && Array.isArray(manifest.contributes?.themes), "only color themes are contributed; no icon themes, commands, or settings");
   for (const key of ["main", "browser", "activationEvents", "dependencies", "os", "cpu", "telemetry", "enabledApiProposals"]) check(!(key in manifest), `no runtime/platform restriction: ${key}`);
-  check(manifest.contributes?.themes?.length === expected.length, "exactly six theme picker contributions");
+  check(manifest.contributes?.themes?.length === expected.length, "exactly seven theme picker contributions");
   check(new Set(manifest.contributes?.themes?.map(t => t.label)).size === expected.length && new Set(manifest.contributes?.themes?.map(t => t.path)).size === expected.length, "unique theme labels and paths");
   const lock = await json("package-lock.json");
   check(/^\d+\.\d+\.\d+$/.test(manifest.version) && lock.version === manifest.version && lock.packages?.[""]?.version === manifest.version, "manifest and lock versions match");

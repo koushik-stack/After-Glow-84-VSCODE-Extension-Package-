@@ -292,3 +292,99 @@ Please do not commit to Main file directly open a new branch everytime to wish t
 ## License
 
 Copyright (c) 2026 Abu Koushik. Released under the MIT License; see `LICENSE` in the extension root.
+
+## Afterglow ’84 — Midnight Mocha (0.6.0)
+
+Midnight Mocha adds a seventh selectable theme, based on Night Drive. Walnut dashboard browns, cream text, caramel focus indicators and restrained copper keywords evoke vintage radios and warm streetlights during a midnight drive. Large surfaces stay distinctly brown, with subtle separation between the editor, sidebar, activity bar and panels. Cool colors are reserved for small informational and terminal accents. All six previous theme files and selectable names are preserved.
+
+Choose **Afterglow ’84 — Midnight Mocha** under **Preferences: Color Theme**. The variant has 498 explicit UI colors, including settings, menus, the command palette, suggestions, hover widgets, notifications, terminal, diff/merge views, debugging, minimap and breadcrumbs. It retains Night Drive's syntax categories and language coverage, italic comments and Markdown emphasis. TextMate and semantic tokens share the same role colors; narrowed expression scopes keep arguments and built-in functions from inheriting an enclosing expression's color. JSON/YAML keys and named callables have explicit rules.
+
+| Role | Color |
+| --- | --- |
+| Editor background | `#1C1512` |
+| Editor foreground / variables / parameters / properties | `#E8D5BF` |
+| Sidebar background | `#17110F` |
+| Activity bar background | `#120D0B` |
+| Panel / terminal background | `#191210` |
+| Inputs and popup backgrounds | `#271D18` |
+| Current line | `#241B16` |
+| List, menu and general UI selection | `#4A3529` |
+| Editor selection, adjusted for comment contrast | `#36271F` |
+| Borders | `#4B382D` |
+| Focus accents and cursor | `#E8AC71` |
+| Comments | `#A28F7D` |
+| Keywords | `#D98B73` |
+| Functions / warnings | `#E6B86A` |
+| Strings | `#B2BD8A` |
+| Types and classes | `#D5BB91` |
+| Numbers / constants / readonly symbols / regex / decorators | `#D4A291` |
+| Operators and punctuation | `#C7B39C` |
+| Errors | `#EB8A80` |
+| Information | `#9EBDD0` |
+
+The supplied selection brown `#4A3529` gives the supplied comments only **3.69:1** contrast. Midnight Mocha darkens the editor selection to `#36271F`, giving selected comments **4.61:1**, while keeping the supplied syntax palette and using `#4A3529` for UI selections. This does not rely on `editor.selectionForeground`, which VS Code documents as a [high-contrast selection color](https://code.visualstudio.com/api/references/theme-color#editor-colors).
+
+Measured text contrast is **12.61:1** in the editor, **5.80:1** for comments, and **5.30:1** for comments in popup surfaces. Primary buttons use dark brown text on caramel: **9.07:1** normally and **10.28:1** on hover. Additional interaction fills use `#30231C`, primary-button hover uses `#EDBA88`, and overlays use transparent palette colors. Search, bracket, debugging and stacked diff highlights are checked with their actual backgrounds. Decorative separators and VS Code's own disabled-control opacity are not treated as normal text.
+
+All 16 terminal ANSI slots are explicit. Black remains a conventional dark terminal background; the other 15 slots, including bright black, meet 4.5:1 against the terminal background. Terminal applications and VS Code's terminal contrast setting can affect rendering.
+
+| ANSI slot | Normal | Bright |
+| --- | --- | --- |
+| Black | `#120D0B` | `#A28F7D` |
+| Red | `#EB8A80` | `#F0AAA0` |
+| Green | `#B2BD8A` | `#CAD1A4` |
+| Yellow | `#E6B86A` | `#F0CC8C` |
+| Blue | `#9EBDD0` | `#B6CEDC` |
+| Magenta | `#C39AA4` | `#D8B4BA` |
+| Cyan | `#A3BDB2` | `#BDD0C5` |
+| White | `#E8D5BF` | `#F3E2CE` |
+
+Build the local 0.6.0 package using the existing workflow:
+
+```sh
+npm run validate
+node --test scripts/validate-family.test.mjs
+npm run package
+code --install-extension afterglow-84-0.6.0.vsix
+```
+
+`npm run validate` includes the Midnight Mocha contrast, overlay, palette and inherited-coverage checks. The optional `node scripts/validate-vscode.mjs "<VS Code resources/app directory>"` check now includes all 17 Midnight Mocha preview grammars and 34 targeted precedence checks. For full schema validation, launch an isolated Extension Development Host with `--extensionDevelopmentPath=<absolute project directory>` and `--extensionTestsPath=<absolute project directory>/scripts/validate-vscode-schema.cjs`. The test uses the installed JSON language service's actual color-theme schema, validates Git decoration IDs against the bundled Git declarations, and confirms that invalid colors, styles and IDs are rejected. It does not change workspace trust.
+
+Windows VS Code 1.136.1 previews were inspected for TypeScript, Python, HTML, selected comments, the command palette, settings and buttons, synthetic diagnostics and their hover, and side-by-side diffs. The preview ran in Restricted Mode: populated language-server completions, live semantic-token output, terminal ANSI rendering, real debug sessions and a full interaction pass remain unverified. Real macOS Intel, macOS Apple Silicon and Linux testing also remains pending. The extension stays declarative and platform-neutral, with no runtime entry point, native code, telemetry, icon-theme contributions or font requirements. Developer validation scripts and local QA fixtures are excluded from the VSIX.
+
+## GitHub Actions CI and releases
+
+`.github/workflows/ci-release.yml` runs on pull requests targeting `main`, pushes to `main`, and `v*` tag pushes. Linux, Windows and macOS runners install the exact lockfile with `npm ci`, run all theme validators and Node tests, then package and inspect the VSIX. Every platform must pass before a release build or publication can run. These checks verify packaging and source portability; they do not replace the desktop previews or real hardware checks described above. Installed-editor schema/grammar checks remain optional local checks because they require a separately installed VS Code.
+
+Run the same portable checks locally:
+
+```sh
+npm ci
+npm run validate
+npm test
+npm run package:check
+```
+
+`package:check` invokes the existing `vsce package` command in a newly created, empty `.release/build-*` directory and prints the exact VSIX path and SHA-256. It compares the archive's manifest, documentation, images and every registered theme against the source, including Midnight Mocha, and rejects missing themes or unexpected packaged files. `.release/` and all `.vsix` files are ignored by Git; workflows, QA files, build output and developer scripts are excluded from the extension. The lockfile pins packaging dependencies, and `SOURCE_DATE_EPOCH` uses the source commit's timestamp for repeatable archives. Release builds use the pinned Node version on Linux.
+
+To publish a new version:
+
+1. Work on a contribution branch, update `package.json`, the lockfile, theme/source changes and the matching changelog section, then run the checks above. Commit the source and workflow, without adding generated VSIX files.
+2. Open a pull request to `main`, let all three platform checks pass, and merge it. The workflow and the intended theme source must exist in the commit being released. An uncommitted local theme cannot be built by a GitHub-hosted runner. If a future repository instruction requires keeping source uncommitted, stop and report that conflict; never tag an older commit as a substitute.
+3. Fetch the merged source, check that the working tree is clean, and create a new stable version tag matching both manifest and lockfile. For version 0.6.0:
+
+   ```sh
+   git switch main
+   git pull --ff-only origin main
+   git status --short
+   git tag -a v0.6.0 -m "Afterglow 84 0.6.0"
+   git push origin v0.6.0
+   ```
+
+4. Watch **CI and VSIX release** in GitHub Actions. The tag run repeats all three platform checks, builds from the exact tagged commit, and passes only that newly generated VSIX to the release job. Invalid tags, version mismatches, dirty source, missing themes and failed checks block publication.
+
+The only publishing destination is this repository's [GitHub Releases](https://github.com/koushik-stack/After-Glow-84-VSCODE-Extension-Package-/releases). Validation and build jobs have `contents: read`; only the release job receives `contents: write`, using the built-in `GITHUB_TOKEN`. No Marketplace, Open VSX, npm or GitHub Packages publishing token or command is used. Dependencies are not installed in the job that holds write permission.
+
+Each release has **exactly one uploaded asset**, `afterglow-84-<version>.vsix`. Its SHA-256 and source commit appear directly in the release notes. The workflow never uploads release ZIPs, source bundles, logs, screenshots or separate checksum files. GitHub itself [automatically provides source ZIP/tarball download links](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases); those are separate from the single uploaded release asset. The internal Actions artifact transfers only the VSIX between jobs and expires after seven days.
+
+Rerunning a successful tag workflow verifies the existing release's filename, size, SHA-256, source commit and single-asset inventory, then succeeds without changing it. An interrupted matching draft can resume. A different checksum, extra asset, missing published asset, unrelated release metadata or moved tag causes a failure requiring manual review; the pipeline never deletes or overwrites an asset and never creates or moves a tag. If the internal build artifact has expired, rerun all jobs to rebuild it. Use a new version tag for changed source, and never force-push an existing release tag.

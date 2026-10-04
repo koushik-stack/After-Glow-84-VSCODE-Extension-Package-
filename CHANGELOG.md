@@ -2,6 +2,17 @@
 
 All notable changes to Afterglow ’84 are documented here.
 
+## 0.6.0
+
+- Added Afterglow ’84 — Midnight Mocha as a seventh dark theme based on Night Drive, with walnut-brown surfaces, cream text, restrained caramel/copper accents and 498 explicit interface colors.
+- Preserved all six existing themes and their selectable names; retained Night Drive's syntax categories and language coverage with consistent TextMate and semantic roles, explicit JSON/YAML keys and named callables.
+- Kept the supplied syntax palette and adjusted the editor selection to `#36271F` for 4.61:1 selected-comment contrast. Normal text and comments measure 12.61:1 and 5.80:1; popup comments measure 5.30:1. Reduced stacked diff tint and honored schema-required transparency.
+- Added Midnight Mocha state/contrast guards to the existing validation workflow; extended installed-grammar checks to its 17 preview languages and 34 precedence targets, and added full installed-editor schema validation with negative probes.
+- Inspected Windows VS Code 1.136.1 code previews, selected comments, command palette, settings/buttons, synthetic diagnostic hover and diff views. Documented remaining live language-service, terminal, debug, macOS and Linux checks.
+- Appended the new description, palette, ANSI colors and validation instructions to the README; synchronized manifest and lockfile at 0.6.0.
+- Added GitHub Actions validation and packaging on Linux, Windows and macOS for pull requests, main-branch pushes and version tags. All platform checks gate release publication.
+- Added GitHub Releases-only publication from the exact tagged commit, with one verified VSIX asset, SHA-256 in the notes, minimal GITHUB_TOKEN permissions, reproducible packaging and safe rerun/draft recovery checks.
+
 ## 0.5.0
 
 - Added Afterglow ’84 — Mocha Retro as a sixth theme, with soft coffee-brown surfaces, cream text, caramel focus, copper keywords, olive strings and 476 explicit interface colors.

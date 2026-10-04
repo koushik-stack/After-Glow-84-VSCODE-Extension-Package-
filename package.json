@@ -1,7 +1,7 @@
 {
   "name": "afterglow-84",
   "displayName": "Afterglow ’84",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "publisher": "Retrocoder",
   "description": "A warm retro VS Code theme inspired by afternoon sunlight, vintage computers, and plum-colored sunsets.",
   "author": {
@@ -57,14 +57,23 @@
         "label": "Afterglow ’84 — Mocha Retro",
         "uiTheme": "vs-dark",
         "path": "./themes/afterglow-84-mocha-retro-color-theme.json"
+      },
+      {
+        "label": "Afterglow ’84 — Midnight Mocha",
+        "uiTheme": "vs-dark",
+        "path": "./themes/afterglow-84-midnight-mocha-color-theme.json"
       }
     ]
   },
   "scripts": {
-    "validate": "node scripts/validate-theme.mjs && node scripts/validate-dark-roast.mjs && node scripts/validate-mocha-retro.mjs",
-    "package": "vsce package --allow-missing-repository --no-rewrite-relative-links"
+    "validate": "node scripts/validate-theme.mjs && node scripts/validate-dark-roast.mjs && node scripts/validate-mocha-retro.mjs && node scripts/validate-midnight-mocha.mjs",
+    "package": "vsce package --allow-missing-repository --no-rewrite-relative-links",
+    "test": "node --test scripts/validate-family.test.mjs scripts/release.test.mjs",
+    "package:check": "node scripts/package-release.mjs"
   },
   "devDependencies": {
-    "@vscode/vsce": "^3.9.2"
+    "@vscode/vsce": "^3.9.2",
+    "js-yaml": "4.3.2",
+    "yauzl": "3.4.0"
   }
 }

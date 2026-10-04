@@ -1,5 +1,7 @@
 .git/**
 .qa/**
+.release/**
+.github/**
 .gitignore
 .vscode/**
 examples/**

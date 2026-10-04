@@ -90,7 +90,9 @@ for (const directory of await readdir(resolve(app, 'extensions'))) {
     if (grammar.language) languages.set(grammar.language, grammar.scopeName);
   }
 }
-const mocha = JSON.parse(await readFile(resolve(root, 'themes/afterglow-84-mocha-retro-color-theme.json'), 'utf8'));
+for (const variant of ['mocha-retro', 'midnight-mocha']) {
+const mocha = JSON.parse(await readFile(resolve(root, `themes/afterglow-84-${variant}-color-theme.json`), 'utf8'));
+const label = mocha.name;
 const registry = new tm.Registry({
   theme: { settings: [{ settings: { foreground: mocha.colors['editor.foreground'], background: mocha.colors['editor.background'] } }, ...mocha.tokenColors] },
   onigLib: Promise.resolve({ createOnigScanner: sources => new onig.OnigScanner(sources), createOnigString: text => new onig.OnigString(text) }),
@@ -120,7 +122,7 @@ for (const [language, file] of Object.entries(previews)) {
     }
     state = result.ruleStack;
   }
-  console.log(`Mocha Retro: ${language} preview tokenized; readable, regular source text`);
+  console.log(`${label}: ${language} preview tokenized; readable, regular source text`);
 }
 
 // Precise precedence regressions: built-in roles, arguments, decorators, keys and emphasis.
@@ -140,10 +142,19 @@ const cases = [
 ];
 let targets = 0;
 const precedenceFailures = [];
+// The original Mocha Retro expectations remain unchanged. Midnight Mocha keeps
+// Night Drive's pink-brown regex/decorator roles and cream variables/parameters.
+const midnightPalette = {
+  '#DFCCB0':'#E8D5BF', '#DFB374':'#E6B86A', '#D6A086':'#D4A291',
+  '#B5BE8A':'#B2BD8A', '#D99A79':'#D98B73', '#AD9785':'#A28F7D', '#D6C28E':'#D5BB91'
+};
 for (const [language, line, expectations] of cases) {
   const grammar = await registry.loadGrammar(languages.get(language));
   const result = grammar.tokenizeLine2(line, tm.INITIAL), scoped = grammar.tokenizeLine(line, tm.INITIAL);
-  for (const [word, expected, style] of expectations) {
+  for (const [word, mochaExpected, style] of expectations) {
+    const expected = variant === 'midnight-mocha'
+      ? language === 'python' && word === 'dataclass' ? '#D4A291' : midnightPalette[mochaExpected]
+      : mochaExpected;
     const index = line.indexOf(word);
     assert.ok(index >= 0, `${word} fixture exists`);
     let metadata;
@@ -155,5 +166,6 @@ for (const [language, line, expectations] of cases) {
     targets++;
   }
 }
-assert.deepEqual(precedenceFailures, [], 'Mocha Retro installed-grammar precedence');
-console.log(`PASS: Mocha Retro ${Object.keys(previews).length} installed preview grammars (${tokenCount} token spans) and ${targets} precedence targets. Language-server/GUI checks are separate.`);
+assert.deepEqual(precedenceFailures, [], `${label} installed-grammar precedence`);
+console.log(`PASS: ${label} ${Object.keys(previews).length} installed preview grammars (${tokenCount} token spans) and ${targets} precedence targets. Language-server/GUI checks are separate.`);
+}
